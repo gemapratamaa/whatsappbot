@@ -21,6 +21,8 @@ def bot():
         1. Give you a quote by typing "quote"
         2. Give you a picture of a dog by typing "dog"
         3. Give you a picture of a random meme by typing "meme"
+        4. Give you a picture of a random cat by typing "cat"
+        5. Give you a random fact by typing "fact"
         '''
         msg.body(greeting_msg)
         counter += 1
@@ -59,10 +61,10 @@ def bot():
         return str(resp)
 
     elif incomingMsg == 'meme':
-        memeUrl = "https://meme-api.glitch.me/light"
+        memeUrl = "https://some-random-api.ml/meme"
         response = requests.get(memeUrl)
         jsoned = json.loads(response.text)
-        randomMeme = jsoned['meme']
+        randomMeme = jsoned['image']
         msg.media(randomMeme)
 
         return str(resp)
@@ -74,6 +76,15 @@ def bot():
         randomCatPic = jsoned[0]['url']
         msg.media(randomCatPic)
 
+        return str(resp)
+    
+    elif incomingMsg == 'fact':
+        factUrl = "https://uselessfacts.jsph.pl/random.json?language=en"
+        response = requests.get(factUrl)
+        jsoned = json.loads(response.text)
+        randomFact = jsoned['text']
+        msg.body(randomFact)
+        msg.body("\r\n\r\nFrom: {}".format(jsoned['source']))
         return str(resp)
 
     elif incomingMsg == 'game':
