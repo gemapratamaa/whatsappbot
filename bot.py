@@ -5,13 +5,24 @@ import os
 import random
 
 app = Flask(__name__)
+counter = 0
 
 @app.route('/bot', methods=['POST'])
 def bot():
+    global counter
+    print(counter)
     incoming_msg = request.values.get('Body', '').lower()
     resp = MessagingResponse()
     msg = resp.message()
-        
+    
+    if counter == 0:
+        greeting_msg = f'''Try typing the number below:
+        1. Guessing game: Number
+        2. Describe what you typed'
+        '''
+        msg.body(greeting_msg)
+        counter += 1
+
     responded = False
     
     if incoming_msg.isdigit():
@@ -46,34 +57,11 @@ def bot():
     
     return str(resp)
 
-"""
-def bot():
-    incoming_msg = request.values.get('Body', '').lower()
-    resp = MessagingResponse()
-    msg = resp.message()
-    responded = False
-    
-    if 'quote' in incoming_msg:
-        # return a quote
-        r = requests.get('https://api.quotable.io/random')
+def main():
+   print("Main")
 
-        if r.status_code == 200:
-            data = r.json()
-            quote = f'{data["content"]} ({data["author"]})'
-        else:
-            quote = 'I could not retrieve a quote at this time, sorry.'
-        msg.body(quote)
-        responded = True
-
-    if 'cat' in incoming_msg:
-        # return a cat pic
-        msg.media('https://cataas.com/cat')
-        responded = True
-    if not responded:
-        
-        msg.body('coba ketik yg laen')
-    return str(resp)
-"""
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='127.0.0.1', port=port)
+    #main()
+
