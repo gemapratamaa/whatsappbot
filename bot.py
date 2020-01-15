@@ -11,12 +11,12 @@ def bot():
     incoming_msg = request.values.get('Body', '').lower()
     resp = MessagingResponse()
     msg = resp.message()
+        
     responded = False
     
-    
     if incoming_msg.isdigit():
-        msg.body('barusan ngetik angka {} ya\n'.format(incoming_msg))
-        msg.body('abis {} tuh {}, sblm {} tuh {}'.format(
+        msg.body('You have typed a number {}.\n'.format(incoming_msg))
+        msg.body('After {} is {}, and before {} is {}'.format(
             incoming_msg, 
             str(int(incoming_msg) + 1), 
             incoming_msg,
@@ -24,12 +24,26 @@ def bot():
             )
         )
         responded = True
-    else:
-        response = ['bkn angka', 'abcdefg pokoknya']
-        msg.body(random.choice(response))
+
+    if incoming_msg.isalpha():
+        if len(incoming_msg) == 1:
+            response = "You have typed a letter {}.".format(incoming_msg)
+            msg.body(response)
+            responded = True
+        else:
+            response = "You have typed an alphabetic string with {} characters: {}".format(len(incoming_msg), incoming_msg)
+            msg.body(response)
+            responded = True
+    
+    if incoming_msg.isalnum() and len(incoming_msg) > 1:
+        response = "You have typed an alphanumeric characters with {} characters: {}".format(incoming_msg)
+        msg.body(response)
         responded = True
-    if not responded:
-        msg.body('coba ketik yg laen')
+
+    if not incoming_msg.isalnum():
+        response = "You have typed a non alphanumeric string: {}".format(incoming_msg)
+        msg.body(response)
+    
     return str(resp)
 
 """
