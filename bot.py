@@ -4,6 +4,7 @@ import requests
 import os
 import random
 import json
+import urllib.request
 
 app = Flask(__name__)
 counter = 0
@@ -85,6 +86,29 @@ def bot():
         randomFact = jsoned['text']
         msg.body(randomFact)
         msg.body("\r\n\r\nFrom: {}".format(jsoned['source']))
+        return str(resp)
+    
+    elif incomingMsg == 'nba':
+        url = "http://api.isportsapi.com/sport/basketball/livescores?api_key=VNhjOMjbs2kQmk9Z"
+
+        # Call iSport Api to get data in json format
+        f = urllib.request.urlopen(url)
+        content = f.read()
+
+        decoded = content.decode('utf-8')
+        jsoned = json.loads(decoded)
+
+        for k in jsoned['data']:
+            if k['leagueName'] == 'NBA':
+                remainingQuarterTime = k['quarterRemainTime']
+                homeTeam = k['homeName']
+                awayTeam = k['awayName']
+                homeScore = k['homeScore']
+                awayScore = k['awayScore']
+                msg.body("{} (home) vs {} (away)".format(homeTeam, awayTeam))
+                msg.body("Current score: {} - {}".format(homeScore, awayScore))
+                msg.body("Time remaining in quarter: {}".format(remainingQuarterTime)) 
+        
         return str(resp)
 
     elif incomingMsg == 'game':
