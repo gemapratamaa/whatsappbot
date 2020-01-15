@@ -21,6 +21,7 @@ def bot():
         greeting_msg = f'''Hi! I'm a WhatsApp chat bot made by Gema. For now I can only do these things:
         1. Give you a quote by typing "quote"
         2. Give you a picture of a dog by typing "dog"
+        3. Give you a picture of a random meme by typing "meme"
         '''
         msg.body(greeting_msg)
         counter += 1
@@ -57,11 +58,28 @@ def bot():
         dogUrl = "https://dog.ceo/api/breeds/image/random"
         response = requests.get(dogUrl)
         jsoned = json.loads(response.text)
-        randomPicUrl = jsoned['message']
-        msg.media(randomPicUrl)
+        randomPic = jsoned['message']
+        msg.media(randomPic)
+
+        return str(resp)
+
+    if incoming_msg == 'meme':
+        memeUrl = "https://meme-api.glitch.me/light"
+        response = requests.get(memeUrl)
+        jsoned = json.loads(response.text)
+        randomMeme = jsoned['meme']
+        msg.media(randomMeme)
 
         return str(resp)
     
+    if incoming_msg == 'cat':
+        catUrl = "https://api.thecatapi.com/v1/images/search"
+        response = requests.get(catUrl)
+        jsoned = json.loads(response.text)
+        randomCatPic = jsoned[0]['url']
+        msg.media(randomCatPic)
+
+        return str(resp)
 
     if incoming_msg.isalpha():
         if len(incoming_msg) == 1:

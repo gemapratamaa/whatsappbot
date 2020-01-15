@@ -15,10 +15,8 @@ webbrowser.open(randomPicUrl)
 #print(r)
 """
 
-jokeUrl = "http://api.icndb.com/jokes/random/"
-response = requests.get(jokeUrl)
+catUrl = "https://api.thecatapi.com/v1/images/search"
+response = requests.get(catUrl)
 jsoned = json.loads(response.text)
-print(jsoned)
 
-randomJoke = jsoned['value']['joke']
-print(randomJoke)
+print(jsoned[0]['url'])
