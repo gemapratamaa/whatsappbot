@@ -13,7 +13,7 @@ def bot():
     msg = resp.message()
     responded = False
     
-    msg.body("greeting msg")
+    
     if incoming_msg.isdigit():
         msg.body('barusan ngetik angka {} ya\n'.format(incoming_msg))
         msg.body('abis {} tuh {}, sblm {} tuh {}'.format(
