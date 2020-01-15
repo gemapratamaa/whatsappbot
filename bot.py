@@ -16,16 +16,16 @@ def bot():
     resp = MessagingResponse()
     msg = resp.message()
     
-    """
     if counter == 0:
         #print("masuk")
-        greeting_msg = f'''Try typing the number below:
-        1. Guessing game: Number
-        2. Describe what you typed'
+        greeting_msg = f'''Hi! I'm a WhatsApp chat bot made by Gema. For now I can only do these things:
+        1. Give you a quote by typing "quote"
+        2. Give you a picture of a dog by typing "dog"
         '''
         msg.body(greeting_msg)
         counter += 1
-    """
+        return str(resp)
+    
     responded = False
 
     #if incoming_msg == '1':
@@ -52,6 +52,16 @@ def bot():
         responded = True
 
         return str(resp)
+
+    if incoming_msg == 'dog':
+        dogUrl = "https://dog.ceo/api/breeds/image/random"
+        response = requests.get(dogUrl)
+        jsoned = json.loads(response.text)
+        randomPicUrl = jsoned['message']
+        msg.media(randomPicUrl)
+
+        return str(resp)
+    
 
     if incoming_msg.isalpha():
         if len(incoming_msg) == 1:
