@@ -3,6 +3,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 import requests
 import os
 import random
+import json
 
 app = Flask(__name__)
 counter = 0
@@ -15,6 +16,7 @@ def bot():
     resp = MessagingResponse()
     msg = resp.message()
     
+    """
     if counter == 0:
         #print("masuk")
         greeting_msg = f'''Try typing the number below:
@@ -23,22 +25,33 @@ def bot():
         '''
         msg.body(greeting_msg)
         counter += 1
-
+    """
     responded = False
 
-    if incoming_msg == '1':
-        guess_number_game()
-    """
-    if incoming_msg.isdigit():
-        msg.body('You have typed a number {}.\n'.format(incoming_msg))
-        msg.body('After {} is {}, and before {} is {}'.format(
+    #if incoming_msg == '1':
+     #   guess_number_game()
+    
+    if incoming_msg.isnumeric():
+        msg.body('You have typed a number {}.\n\n'.format(incoming_msg))
+        msg.body('After {} is {}, and before {} is {}.'.format(
             incoming_msg, 
             str(int(incoming_msg) + 1), 
             incoming_msg,
             str(int(incoming_msg) - 1)
             )
         )
+        #msg.body("{} dikali 2 = {}".format(incoming_msg, int(incoming_msg) * 2))
         responded = True
+        return str(resp)
+
+    if incoming_msg == 'quote':
+        url = "https://type.fit/api/quotes"
+        result = json.loads(requests.get(url).text)
+        randomQuote = random.choice(result)['text']
+        msg.body(randomQuote)
+        responded = True
+
+        return str(resp)
 
     if incoming_msg.isalpha():
         if len(incoming_msg) == 1:
@@ -49,20 +62,33 @@ def bot():
             response = "You have typed an alphabetic string with {} characters: {}".format(len(incoming_msg), incoming_msg)
             msg.body(response)
             responded = True
+
+        return str(resp)
     
     if incoming_msg.isalnum() and len(incoming_msg) > 1:
-        response = "You have typed an alphanumeric characters with {} characters: {}".format(incoming_msg)
+        response = "You have typed an alphanumeric characters with {} characters: {}".format(len(incoming_msg), incoming_msg)
         msg.body(response)
         responded = True
+
+        return str(resp)
 
     if not incoming_msg.isalnum():
         response = "You have typed a non alphanumeric string: {}".format(incoming_msg)
         msg.body(response)
-    """
+        responded = True
+
+        return str(resp)
+    
     return str(resp)
 
 def main():
    print("Main")
+
+def randomQuote():
+    url = "https://type.fit/api/quotes"
+    result = json.loads(requests.get(url).text)
+    randomQuote = random.choice(result)['text']
+    msg.body(randomQuote)
 
 def guess_number_game():
     print("masuk")
