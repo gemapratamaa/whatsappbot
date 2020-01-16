@@ -42,7 +42,7 @@ def bot():
     responded = False
     
     if len(incomingMsg) == 1:
-        if incomingMsg == 'quote':
+        if incomingMsg[0] == 'quote':
             url = "https://type.fit/api/quotes"
             result = json.loads(requests.get(url).text)
             randomQuote = random.choice(result)['text']
@@ -140,6 +140,10 @@ def bot():
 
         return str(resp)
 
+    elif len(incomingMsg) == 2:
+        pass
+
+    
 @app.route('/')
 def index():
     return "<h1>Welcome to Gema's server !!</h1>"

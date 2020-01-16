@@ -24,9 +24,7 @@ def SportDemo():
             print("{} (home) vs {} (away)".format(homeTeam, awayTeam))
             print("Current score: {} - {}".format(homeScore, awayScore))
             print("Time remaining in quarter: {}".format(remainingQuarterTime))
-
-
-        
+            
             ##print(homeTeam)
 
             #print(awayTeam)

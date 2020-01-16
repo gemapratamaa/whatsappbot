@@ -1,22 +1,10 @@
 import requests
 import json
-import random
-from PIL import Image
-import webbrowser
-"""
-dogUrl = "https://dog.ceo/api/breeds/image/random"
-response = requests.get(dogUrl)
-jsoned = json.loads(response.text)
-randomPicUrl = jsoned['message']
-msg.media(randomPicUrl)
-webbrowser.open(randomPicUrl)
-#randomPic.show() 
-#pic = json.loads(r)
-#print(r)
-"""
+import urllib
+#userInput = input("input:")
 
-catUrl = "https://api.thecatapi.com/v1/images/search"
+catUrl = "https://restcountries.eu/rest/v2/name/indonesia"
 response = requests.get(catUrl)
 jsoned = json.loads(response.text)
-
-print(jsoned[0]['url'])
+decoded = jsoned.decode('utf-8')
+print(decoded)
