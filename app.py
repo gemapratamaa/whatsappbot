@@ -159,7 +159,7 @@ def send_message(to, body):
    )
 
 
-@app.route('/whatsapp', methods=['GET', 'POST'])
+@app.route('/bot', methods=['GET', 'POST'])
 def receive_message():
    # Get the description for this character
    character = request.values.get('Body')
