@@ -3,8 +3,8 @@ import json
 import urllib
 #userInput = input("input:")
 
-catUrl = "https://restcountries.eu/rest/v2/name/indonesia"
-response = requests.get(catUrl)
+foxUrl = "https://randomfox.ca/floof/"
+response = requests.get(dogUrl)
 jsoned = json.loads(response.text)
-decoded = jsoned.decode('utf-8')
-print(decoded)
+randomPic = jsoned['image']
+print(randomPic)

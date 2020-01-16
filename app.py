@@ -60,7 +60,7 @@ def bot():
 
         elif incomingMsg[0] == 'fox':
             foxUrl = "https://randomfox.ca/floof/"
-            response = requests.get(dogUrl)
+            response = requests.get(foxUrl)
             jsoned = json.loads(response.text)
             randomPic = jsoned['image']
             msg.media(randomPic)
@@ -170,7 +170,7 @@ def receive_message():
    return ('', 204)
 
 def get_emojipedia_description(character):
-       # Get the Emojipedia page for this emoji
+    # Get the Emojipedia page for this emoji
    session = HTMLSession()
    response = session.get('https://emojipedia.org/' + character)
 
