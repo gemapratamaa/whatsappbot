@@ -24,8 +24,11 @@ def bot():
         3. Give you a picture of a random meme by typing "meme"
         4. Give you a picture of a random cat by typing "cat"
         5. Give you a random fact by typing "fact"
+        6. Give you a (messy) live score of NBA by typing "nba"
         '''
+        msg.media("https://realestatekawagoe.com/wp-content/uploads/2019/10/1412350.jpg")
         msg.body(greeting_msg)
+
         counter += 1
         return str(resp)
     
@@ -91,7 +94,6 @@ def bot():
     elif incomingMsg == 'nba':
         url = "http://api.isportsapi.com/sport/basketball/livescores?api_key=VNhjOMjbs2kQmk9Z"
 
-        # Call iSport Api to get data in json format
         f = urllib.request.urlopen(url)
         content = f.read()
 
@@ -141,50 +143,9 @@ def bot():
 
     return str(resp)
 
-def main():
-   print("Main")
-
-def randomQuote():
-    url = "https://type.fit/api/quotes"
-    result = json.loads(requests.get(url).text)
-    randomQuote = random.choice(result)['text']
-    msg.body(randomQuote)
-
 @app.route('/')
 def index():
-    return "<h1>Welcome to our server !!</h1>"
+    return "<h1>Welcome to Gema's server !!</h1>"
 
-    
 if __name__ == "__main__":
-    #port = int(os.environ.get('PORT', 5000))
-    #app.run(host='127.0.0.1', port=port)
     app.run(threaded=True, port=5000)
-
-
-    """
-    if incomingMsg.isalpha():
-        if len(incomingMsg) == 1:
-            response = "You have typed a letter {}.".format(incomingMsg)
-            msg.body(response)
-            responded = True
-        else:
-            response = "You have typed an alphabetic string with {} characters: {}".format(len(incomingMsg), incomingMsg)
-            msg.body(response)
-            responded = True
-
-        return str(resp)
-    
-    if incomingMsg.isalnum() and len(incomingMsg) > 1:
-        response = "You have typed an alphanumeric characters with {} characters: {}".format(len(incomingMsg), incomingMsg)
-        msg.body(response)
-        responded = True
-
-        return str(resp)
-
-    if not incomingMsg.isalnum():
-        response = "You have typed a non alphanumeric string: {}".format(incomingMsg)
-        msg.body(response)
-        responded = True
-
-        return str(resp)
-    """
